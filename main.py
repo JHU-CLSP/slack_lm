@@ -23,7 +23,7 @@ def event_test(say, body):
         user_id = body["authorizations"][0]["user_id"]
         body_without_user_id = body["event"]["text"].replace(f"<@{user_id}>", "")
         print("The message is: %s" % body_without_user_id)
-        thread_ts = body["event"]["thread_ts"]
+
 
         data = {
             "model": model_name,
@@ -38,7 +38,11 @@ def event_test(say, body):
         print(response.json())
         output = response.json()["choices"][0]["text"]
         # say this output in the thread
-        say(text=output, thread_ts=thread_ts)
+        if "thread_ts" in body["event"]:
+            thread_ts = body["event"]["thread_ts"]
+            say(text=output, thread_ts=thread_ts)
+        else:
+            say(text=output)
     except Exception as e:
         print("Error: %s" % e)
         say("I'm sorry, I don't know the answer to that question. Here is an error message: ```%s```" % e)
