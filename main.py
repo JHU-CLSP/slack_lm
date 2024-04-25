@@ -24,6 +24,9 @@ def event_test(say, body):
         body_without_user_id = body["event"]["text"].replace(f"<@{user_id}>", "")
         print("The message is: %s" % body_without_user_id)
 
+        # TODO:
+        # 1. collect conversation history
+        # 2. fix the issue with EOS token
 
         data = {
             "model": model_name,
@@ -31,7 +34,6 @@ def event_test(say, body):
             "max_tokens": 200,
             "temperature": 0,
             "stop_token_ids": [128001, 128009],
-            "eos_token_id": [128001, 128009],
         }
 
         response = requests.post(url, headers=headers, json=data)
