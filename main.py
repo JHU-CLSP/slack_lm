@@ -45,7 +45,7 @@ def event_test(say, body):
         data = {
             "model": "meta-llama/Meta-Llama-3-8B-Instruct",
             "messages": [
-                {"role": "user", "content": "JHU stands for what?"}
+                {"role": "user", "content": body_without_user_id}
             ],
             "max_tokens": 300,
             "temperature": 0
