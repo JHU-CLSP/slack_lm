@@ -8,7 +8,7 @@ from slack_bolt.adapter.socket_mode import SocketModeHandler
 # Create handle to Slack
 app = App(token=os.environ["SLACK_BOT_TOKEN"])
 
-url = "http://ia1.wse.jhu.edu:8080/v1/completions"
+url = "http://ia1.wse.jhu.edu:8080/v1/chat/completions"
 model_name = "meta-llama/Meta-Llama-3-8B-Instruct"
 headers = {"Content-Type": "application/json"}
 
@@ -28,20 +28,32 @@ def event_test(say, body):
         # 1. collect conversation history
         # 2. fix the issue with EOS token
 
+        # data = {
+        #     "model": model_name,
+        #     "messages": [
+        #         {
+        #             "role": "user",
+        #             "content": body_without_user_id
+        #         }
+        #     ],
+        #     "max_tokens": 100,
+        #     "temperature": 0,
+        #     "stop_token_ids": [128001, 128009],
+        #     "stop_reason": 128001,
+        # }
+
         data = {
-            "model": model_name,
+            "model": "meta-llama/Meta-Llama-3-8B-Instruct",
             "messages": [
-                {"role": "user", "content": body_without_user_id}
+                {"role": "user", "content": "JHU stands for what?"}
             ],
-            "max_tokens": 100,
-            "temperature": 0,
-            "stop_token_ids": [128001, 128009],
-            "stop_reason": 128001,
+            "max_tokens": 300,
+            "temperature": 0
         }
 
         response = requests.post(url, headers=headers, json=data)
-        print(response.json())
-        output = response.json()["choices"][0]["text"]
+        print("The response is: %s" % response.json())
+        output = response.json()["choices"][0]["message"]["content"]
         # say this output in the thread
         if "thread_ts" in body["event"]:
             thread_ts = body["event"]["thread_ts"]
