@@ -30,8 +30,10 @@ def event_test(say, body):
 
         data = {
             "model": model_name,
-            "prompt": body_without_user_id,
-            "max_tokens": 200,
+            "messages": [
+                {"role": "user", "content": body_without_user_id}
+            ],
+            "max_tokens": 100,
             "temperature": 0,
             "stop_token_ids": [128001, 128009],
             "stop_reason": 128001,
