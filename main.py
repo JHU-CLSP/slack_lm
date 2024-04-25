@@ -34,6 +34,7 @@ def event_test(say, body):
             "max_tokens": 200,
             "temperature": 0,
             "stop_token_ids": [128001, 128009],
+            "stop_reason": 128001,
         }
 
         response = requests.post(url, headers=headers, json=data)
