@@ -4,7 +4,7 @@ import os
 from slack_bolt import App
 import json
 
-#Create handle to Slack
+# Create handle to Slack
 app = App(token=os.environ["SLACK_BOT_TOKEN"])
 bot_userid = os.environ["SLACK_BOT_USERID"]
 channel_name = os.environ["SLACK_CHANNEL_NAME"]
@@ -19,7 +19,7 @@ for result in app.client.conversations_list():
     for channel in result["channels"]:
         if channel["name"] == channel_name:
             channel_id = channel["id"]
-            #Print result
+            # Print result
             print(f"Found conversation ID: {channel_id}")
             break
 
@@ -38,14 +38,14 @@ while True:
     if not result.data["has_more"]:
         break
     cursor = result.data["response_metadata"]["next_cursor"]
-    result = app.client.conversations_history(channel=channel_id,cursor=cursor)
+    result = app.client.conversations_history(channel=channel_id, cursor=cursor)
 
 # Print results
 print(f"{len(conversation_history):d} messages found in {channel_id:s}")
 
 bot_messages = []
 for message in conversation_history:
-    if message["user"]!=bot_userid:
+    if message["user"] != bot_userid:
         continue
     if "subtype" in message and message["subtype"] == "channel_join":
         continue
@@ -56,7 +56,7 @@ for message in conversation_history:
 # Print results
 print(f"{len(bot_messages):d} bot messages found in {channel_id:s}")
 
-with open(save_to_file,"w") as f:
-    json.dump(bot_messages,f,indent=4)
+with open(save_to_file, "w") as f:
+    json.dump(bot_messages, f, indent=4)
 
 print(f"finished successfully, saved to {save_to_file:s}")

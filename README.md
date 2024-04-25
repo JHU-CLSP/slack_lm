@@ -1,12 +1,5 @@
-# Virtual PI
-
-This script reads all of the PDFs in a directory, and uses a Large Language Model to make the document content available for answering natural language prompts, via Slack.
-
-The script is trivial.. it just stands on the shoulders of giants such as [PaperQA](https://github.com/whitead/paper-qa/), [OpenAI Embeddings](https://platform.openai.com/docs/guides/embeddings), [FAISS](https://github.com/facebookresearch/faiss), [langchain](https://github.com/hwchase17/langchain), and [Slack Bolt](https://slack.dev/bolt-python/concepts).
-
-Why the name? When your Principal Investigator goes on holidays, you need a *Virtual PI* to answer the difficult questions!
-
-This work was first inspired by a conversation with the authors of [Galactic ChitChat: Using Large Language Models to Converse with Astronomy Literature](https://arxiv.org/abs/2304.05406), who implemented a similar tool, using a similar software stack. Virtual PI was first implemented and used for querying documentation for an astronomical instrument, [MAVIS](https://mavis-ao.org/).
+# LM in Slack 
+A lightweight code to connects LM to chatbot.
 
 ## Configuration
 #### API keys
@@ -17,15 +10,14 @@ cp .env-example .env
 vim .env
 ```
 #### Launching the bot
-
 To run the script, you require:
-  * A directory with the PDFs you wish the expert system to ingest (e.g., `./pdfs/*.pdfs`)
   * A working Python3 environment with the following packages available:
     * `pip3 install -r requirements.txt`
   * An OpenAI [API key](https://help.openai.com/en/articles/4936850-where-do-i-find-my-secret-api-key).
-  * You can [Create a new Slack app](https://api.slack.com/tutorials/tracks/responding-to-app-mentions) that is preconfigured with the neccessary permissions by pressing the green 'Create App' button on that link.
+  * You can [Create a new Slack app](https://api.slack.com/tutorials/tracks/responding-to-app-mentions) that is preconfigured with the necessary permissions by pressing the green 'Create App' button on that link.
     * You can change the name of your app/bot (you'll use this to interact with it on Slack, by editing the 'manifest' file when the option is presented.
     * You will need to copy the App and Bot Tokens to set as environment variables, as described below.
+    * This might be a useful tutorial: https://www.youtube.com/watch?v=qKZLDEIL2r0 
 
 The three API tokens you have generated should be exported to your shell environment at runtime:
 
@@ -39,7 +31,7 @@ e.g., by `source`ing the `.env` file after modifying it.
 Then you can start the app as follows.
 
 ```bash
-python3 virtualpi.py /path/to/your/PDF/directory/
+python3 main.py
 ```
 
 #### Recording Reactions
