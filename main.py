@@ -47,7 +47,7 @@ def event_test(say, body):
             "messages": [
                 {"role": "user", "content": body_without_user_id}
             ],
-            "max_tokens": 300,
+            "max_tokens": 700,
             "temperature": 0
         }
 
